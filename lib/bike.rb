@@ -1,6 +1,8 @@
 class Bike
+attr_accessor :working
 
-  def working?
-  end
+def initialize(working = true)
+  @working = working
+end
 
 end

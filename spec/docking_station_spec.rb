@@ -2,7 +2,7 @@ require "docking_station"
 
 describe DockingStation do
   it { is_expected.to respond_to :release_bike }
-  it { is_expected.to respond_to :working? }
+  it { is_expected.to respond_to :working }
   it { is_expected.to respond_to(:dock).with(1).argument }
   it { is_expected.to respond_to :bikes }
   it 'Checks that a new Docking station can accept a capacity parameter from user' do
@@ -16,9 +16,15 @@ describe DockingStation do
 
   describe ':release_bike' do
     it { expect :release_bike == Bike.new }
-    it { expect Bike.new.respond_to? :working? }
+    it { expect Bike.new.respond_to? :working }
     it "raises an error when there are no bikes available" do
       expect{ subject.release_bike }.to raise_error "No bikes available"
+    end
+    it "raises an error when the bike is broken" do
+      bike = Bike.new(false)
+      station = DockingStation.new
+      station.dock(bike)
+      expect {station.release_bike }.to raise_error "Broken bike"
     end
   end
 

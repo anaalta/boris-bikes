@@ -12,15 +12,16 @@ end
 
   def dock(bike)
     fail 'Docking station full' if full?
-    @bikes.push(bike)
+    @bikes.push({working: bike.working})
   end
 
   def release_bike
     fail("No bikes available") if empty?
-    @bikes.pop(bike)
+    fail ("Broken bike") if !@bikes.last[:working]
+    @bikes.pop(bike.working)
   end
 
-  def working?
+  def working
   end
 
 private
